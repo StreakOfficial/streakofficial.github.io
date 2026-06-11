@@ -51,35 +51,33 @@ footer{text-align:center;padding:34px 22px;border-top:1px solid rgba(198,89,255,
 .nav-links{justify-content:center}
 .role{display:block;margin-bottom:6px}
 }
+
+/* toggle button */
+#soundToggle{
+position:fixed;
+top:15px;
+right:15px;
+z-index:99999;
+padding:10px 14px;
+border-radius:12px;
+background:rgba(20,0,35,.85);
+border:1px solid #d946ff;
+color:white;
+font-size:12px;
+cursor:pointer;
+user-select:none;
+}
 </style>
 </head>
 
 <body>
 
-<!-- 💥 AUDIO ADDED (NO DESIGN CHANGES) -->
+<!-- AUDIO -->
 <audio id="clickSound" src="click.mp3" preload="auto"></audio>
 <audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
 
-<script>
-const clickSound = document.getElementById("clickSound");
-const bgMusic = document.getElementById("bgMusic");
-
-// 🔊 subtle click sound
-document.addEventListener("click", () => {
-  clickSound.volume = 0.08;
-  clickSound.currentTime = 0;
-  clickSound.play();
-});
-
-// 🎵 start music on first interaction
-function startMusic(){
-  bgMusic.volume = 0.35;
-  bgMusic.play();
-}
-
-// attach music start to first click anywhere
-document.addEventListener("click", startMusic, { once:true });
-</script>
+<!-- TOGGLE -->
+<div id="soundToggle">🔊 Sound: ON</div>
 
 <header>
 <div class="nav">
@@ -164,6 +162,47 @@ Join Discord →
 <footer>
 © 2026 Streak Official
 </footer>
+
+<script>
+let soundEnabled = true;
+
+const clickSound = document.getElementById("clickSound");
+const bgMusic = document.getElementById("bgMusic");
+const toggle = document.getElementById("soundToggle");
+
+/* 🔊 click sound */
+document.addEventListener("click", () => {
+  if (!soundEnabled) return;
+
+  clickSound.volume = 0.08;
+  clickSound.currentTime = 0;
+  clickSound.play();
+});
+
+/* 🎵 instant music (NO fade) */
+document.addEventListener("click", () => {
+  if (!soundEnabled) return;
+
+  bgMusic.volume = 0.35;
+  bgMusic.play();
+}, { once:true });
+
+/* 🔘 toggle */
+toggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  soundEnabled = !soundEnabled;
+
+  if (soundEnabled) {
+    toggle.innerText = "🔊 Sound: ON";
+    bgMusic.volume = 0.35;
+    bgMusic.play();
+  } else {
+    toggle.innerText = "🔇 Sound: OFF";
+    bgMusic.pause();
+  }
+});
+</script>
 
 </body>
 </html>
