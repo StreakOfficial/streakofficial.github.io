@@ -6,7 +6,6 @@
 
 <title>Streak | Discord</title>
 
-<!-- FAVICON (THIS IS WHAT YOU WANTED) -->
 <link rel="icon" type="image/png" href="favicon.png">
 
 <style>
@@ -44,6 +43,11 @@ h2{font-size:36px;margin-bottom:24px;color:#f3d8ff;text-shadow:0 0 14px rgba(217
 
 .role{color:#e19bff;font-weight:bold;display:inline-block;min-width:170px}
 .value{color:#bfa7ce}
+
+.stats-value{
+color:white;
+font-weight:bold;
+}
 
 footer{text-align:center;padding:34px 22px;border-top:1px solid rgba(198,89,255,.25);color:#9b7db0;font-size:13px;margin-top:80px}
 
@@ -115,6 +119,24 @@ Join Discord →
 </section>
 
 <section class="section">
+<h2>Live Server Stats</h2>
+
+<div class="box">
+<ul class="line-list">
+<li>
+<span class="role">Members</span>
+<span class="value stats-value" id="members">0</span>
+</li>
+
+<li>
+<span class="role">Online</span>
+<span class="value stats-value" id="online">0</span>
+</li>
+</ul>
+</div>
+</section>
+
+<section class="section">
 <h2>Server Information</h2>
 
 <div class="box">
@@ -140,6 +162,23 @@ Join Discord →
 <footer>
 © 2026 Streak Official
 </footer>
+
+<script>
+async function loadStats(){
+  try{
+    const res = await fetch("https://streak-bot-5unt.onrender.com/stats");
+    const data = await res.json();
+
+    document.getElementById("members").innerText = data.members;
+    document.getElementById("online").innerText = data.online;
+  } catch(err){
+    console.log("Stats error:", err);
+  }
+}
+
+loadStats();
+setInterval(loadStats, 10000);
+</script>
 
 </body>
 </html>
