@@ -52,7 +52,7 @@ footer{text-align:center;padding:34px 22px;border-top:1px solid rgba(198,89,255,
 .role{display:block;margin-bottom:6px}
 }
 
-/* toggle button */
+/* toggle */
 #soundToggle{
 position:fixed;
 top:15px;
@@ -110,6 +110,7 @@ Join Discord →
 
 <section class="section">
 <h2>Rules</h2>
+
 <div class="box">
 <ul class="line-list">
 <li>Be respectful to all members.</li>
@@ -124,6 +125,7 @@ Join Discord →
 
 <section class="section">
 <h2>Staff</h2>
+
 <div class="box">
 <ul class="line-list">
 <li><span class="role">Owner</span><span class="value">@zdkqx (Streak)</span></li>
@@ -136,6 +138,7 @@ Join Discord →
 
 <section class="section">
 <h2>Server Information</h2>
+
 <div class="box">
 <ul class="line-list">
 <li><span class="role">Founded</span><span class="value">10/06/2026</span></li>
@@ -145,6 +148,7 @@ Join Discord →
 
 <section class="section">
 <h2>Announcements</h2>
+
 <div class="box">
 <ul class="line-list">
 <li>No announcements yet.</li>
@@ -161,7 +165,7 @@ Join Discord →
 
 <script>
 let soundEnabled = localStorage.getItem("soundEnabled");
-soundEnabled = soundEnabled === null ? true : (soundEnabled === "true");
+soundEnabled = soundEnabled === null ? true : soundEnabled === "true";
 
 const clickSound = document.getElementById("clickSound");
 const bgMusic = document.getElementById("bgMusic");
@@ -172,7 +176,7 @@ function updateToggle(){
   localStorage.setItem("soundEnabled", soundEnabled);
 }
 
-/* 🔊 CLICK ONLY ON UI */
+/* CLICK SOUND */
 document.addEventListener("click", (e) => {
   if (!soundEnabled) return;
 
@@ -187,20 +191,19 @@ document.addEventListener("click", (e) => {
   clickSound.play();
 });
 
-/* 🎵 MUSIC (SYNCED STATE ONLY, NO RESET LOGIC HERE) */
+/* MUSIC CONTINUES (NO RESET) */
 function startMusic(){
   if (!soundEnabled) return;
 
   if (bgMusic.paused){
     bgMusic.volume = 0.35;
-    bgMusic.play();
+    bgMusic.play().catch(()=>{});
   }
 }
 
-/* INIT MUSIC */
 startMusic();
 
-/* 🔘 TOGGLE (SYNCED WITH INDEX VIA LOCALSTORAGE) */
+/* TOGGLE SYNCED WITH INDEX */
 toggle.addEventListener("click", (e) => {
   e.stopPropagation();
 
@@ -214,7 +217,6 @@ toggle.addEventListener("click", (e) => {
   }
 });
 
-/* INIT UI */
 updateToggle();
 </script>
 
