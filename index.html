@@ -267,12 +267,6 @@ h2{
   gap:18px;
 }
 
-.card-link{
-  text-decoration:none;
-  color:inherit;
-  display:block;
-}
-
 .card{
   position:relative;
   padding:24px;
@@ -282,26 +276,6 @@ h2{
   overflow:hidden;
   transition:.25s;
   cursor:pointer;
-}
-
-.card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  padding:1px;
-  border-radius:inherit;
-  background:linear-gradient(90deg,transparent,#7a1fff,#d946ff,#ffffff,#d946ff,transparent);
-  background-size:300% 100%;
-  animation:borderMove 5s linear infinite;
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
-  pointer-events:none;
-}
-
-@keyframes borderMove{
-  from{background-position:300% 0}
-  to{background-position:0 0}
 }
 
 .card:hover{
@@ -331,21 +305,6 @@ h2{
   justify-content:flex-end;
 }
 
-.showcase .card:first-child{
-  min-height:300px;
-}
-
-.tag{
-  width:fit-content;
-  margin-bottom:12px;
-  padding:6px 10px;
-  border:1px solid rgba(217,70,255,.5);
-  border-radius:999px;
-  color:#e8c3ff;
-  font-size:11px;
-  letter-spacing:1.5px;
-}
-
 footer{
   text-align:center;
   padding:34px 22px;
@@ -355,33 +314,27 @@ footer{
 }
 
 @media(max-width:850px){
-  .nav{
-    flex-direction:column;
-    gap:12px;
-  }
-
   .grid,
   .showcase{
     grid-template-columns:1fr;
-  }
-
-  .section-head{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .hero h1{
-    letter-spacing:4px;
-  }
-
-  .hero-logo{
-    width:330px;
   }
 }
 </style>
 </head>
 
 <body>
+
+<!-- AUDIO CLICK SOUND -->
+<audio id="clickSound" src="click.mp3" preload="auto"></audio>
+
+<script>
+const clickSound = document.getElementById("clickSound");
+
+document.addEventListener("click", (e) => {
+  clickSound.currentTime = 0;
+  clickSound.play();
+});
+</script>
 
 <div class="code-bg">
   <span>local streak = true</span>
@@ -428,98 +381,25 @@ footer{
   <img class="hero-logo" src="streak-logo.png" alt="Streak Official Logo">
 
   <h1>STREAK OFFICIAL</h1>
-
   <p>A next-generation experience is currently in development.</p>
-
   <a class="status" href="#features">Website Coming Soon</a>
 </main>
 
 <section id="features">
   <div class="section-head">
     <h2>Features</h2>
-    <p>Explore the core systems planned for Streak.</p>
   </div>
 
   <div class="grid">
-
-    <a class="card-link" href="advanced-execution.html">
-      <div class="card">
-        <h3>Advanced Execution</h3>
-        <p>Fast, reliable, and optimized script execution designed for smooth performance and stability.</p>
-      </div>
-    </a>
-
-    <a class="card-link" href="security.html">
-      <div class="card">
-        <h3>Security First</h3>
-        <p>Built with protection in mind, including authentication systems, update verification, and secure delivery.</p>
-      </div>
-    </a>
-
-    <a class="card-link" href="community.html">
-      <div class="card">
-        <h3>Community Driven</h3>
-        <p>Built around feedback, support, and future improvements shaped by the Streak community.</p>
-      </div>
-    </a>
-
+    <div class="card"><h3>Advanced Execution</h3><p>Fast and stable.</p></div>
+    <div class="card"><h3>Security First</h3><p>Protected system.</p></div>
+    <div class="card"><h3>Community Driven</h3><p>Built for users.</p></div>
   </div>
-</section>
-
-<section id="showcase">
-  <div class="section-head">
-    <h2>Showcase</h2>
-    <p>Preview spaces for future screenshots, UI, and release media.</p>
-  </div>
-
-  <div class="grid showcase">
-
-    <a class="card-link" href="interface-preview.html">
-      <div class="card">
-        <span class="tag">INTERFACE</span>
-        <h3>Interface Preview</h3>
-        <p>A future space for showing the Streak interface, design style, menus, and visual previews.</p>
-      </div>
-    </a>
-
-    <a class="card-link" href="development-preview.html">
-      <div class="card">
-        <span class="tag">DEVELOPMENT</span>
-        <h3>Development Preview</h3>
-        <p>Progress updates, early previews, and development information can be placed here later.</p>
-      </div>
-    </a>
-
-    <a class="card-link" href="release-media.html">
-      <div class="card">
-        <span class="tag">MEDIA</span>
-        <h3>Release Media</h3>
-        <p>Future screenshots, videos, release banners, and showcase content will appear here.</p>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<section id="updates">
-  <div class="section-head">
-    <h2>Updates</h2>
-    <p>Latest project status.</p>
-  </div>
-
-  <a class="card-link" href="updates.html">
-    <div class="card">
-      <h3>Development Status</h3>
-      <p>The Streak website is still under construction, and the Discord server is also currently being set up. More previews, announcements, and release information will be added soon.</p>
-    </div>
-  </a>
 </section>
 
 <footer>
-  © 2026 Streak Official. Website Coming Soon.
+  © 2026 Streak Official
 </footer>
-
-</div>
 
 <script>
 function enterSite(){
