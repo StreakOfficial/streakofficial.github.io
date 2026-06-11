@@ -18,7 +18,7 @@ body{
   overflow-x:hidden;
 }
 
-/* subtle code background */
+/* code background */
 .code-bg{
   position:fixed;
   inset:0;
@@ -69,7 +69,6 @@ body{
 .intro.hidden{
   opacity:0;
   visibility:hidden;
-  pointer-events:none;
 }
 
 .intro img{
@@ -95,7 +94,7 @@ body{
 
 .site{
   opacity:0;
-  transition:.7s;
+  transition:.8s;
 }
 
 .site.visible{
@@ -176,9 +175,7 @@ header{
   width:430px;
   max-width:90vw;
   margin-bottom:38px;
-  filter:
-    drop-shadow(0 0 22px #b640ff)
-    drop-shadow(0 0 55px rgba(182,64,255,.35));
+  filter:drop-shadow(0 0 22px #b640ff);
   animation:logoFloat 4s ease-in-out infinite;
 }
 
@@ -188,165 +185,51 @@ header{
 }
 
 .hero h1{
-  position:relative;
   font-size:clamp(48px,8vw,98px);
   letter-spacing:10px;
   color:white;
   margin-bottom:20px;
-  text-shadow:0 0 2px white;
-}
-
-.hero h1::before{
-  content:"STREAK OFFICIAL";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  background:linear-gradient(90deg,#7a1fff,#d946ff,#ffffff,#d946ff,#7a1fff);
-  background-size:300% 100%;
-  animation:textFlow 4s linear infinite;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  filter:blur(8px);
-}
-
-@keyframes textFlow{
-  from{background-position:300% 0}
-  to{background-position:0 0}
 }
 
 .hero p{
   color:#dcb8ff;
   font-size:18px;
-  line-height:1.7;
 }
 
 .status{
-  display:inline-block;
   margin-top:26px;
   padding:11px 22px;
   border-radius:999px;
   border:1px solid rgba(217,70,255,.65);
   color:#f3d8ff;
   text-decoration:none;
-  transition:.25s;
 }
 
-.status:hover{
-  box-shadow:0 0 15px rgba(217,70,255,.35);
-}
-
-/* sections */
-section{
-  max-width:1120px;
-  margin:auto;
-  padding:70px 22px;
-}
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:20px;
-  margin-bottom:24px;
-}
-
-h2{
-  font-size:34px;
-  color:#f3d8ff;
-  text-shadow:0 0 14px rgba(217,70,255,.6);
-}
-
-.section-head p{
-  color:#a98dc0;
-  font-size:14px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
-.card{
-  position:relative;
-  padding:24px;
-  min-height:150px;
-  border-radius:22px;
-  background:rgba(8,0,14,.96);
-  overflow:hidden;
-  transition:.25s;
-  cursor:pointer;
-}
-
-.card:hover{
-  transform:translateY(-4px);
-}
-
-.card h3{
-  color:#e19bff;
-  margin-bottom:10px;
-}
-
-.card p{
-  color:#d8cde0;
-  line-height:1.6;
-  font-size:15px;
-}
-
-.showcase{
-  grid-template-columns:1.2fr 1fr 1fr;
-}
-
-.showcase .card{
-  min-height:230px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-}
-
-footer{
-  text-align:center;
-  padding:34px 22px;
-  border-top:1px solid rgba(198,89,255,.25);
-  color:#9b7db0;
-  font-size:13px;
-}
-
-@media(max-width:850px){
-  .grid,
-  .showcase{
-    grid-template-columns:1fr;
-  }
+/* toggle */
+#soundToggle{
+position:fixed;
+top:15px;
+right:15px;
+z-index:99999;
+padding:10px 14px;
+border-radius:12px;
+background:rgba(20,0,35,.85);
+border:1px solid #d946ff;
+color:white;
+font-size:12px;
+cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO SYSTEM (ADDED ONLY) -->
+<!-- AUDIO -->
 <audio id="clickSound" src="click.mp3" preload="auto"></audio>
 <audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
 
-<script>
-const clickSound = document.getElementById("clickSound");
-const bgMusic = document.getElementById("bgMusic");
-
-/* subtle click */
-document.addEventListener("click", () => {
-  clickSound.volume = 0.08;
-  clickSound.currentTime = 0;
-  clickSound.play();
-});
-
-/* enter site music */
-function enterSite(){
-  document.getElementById("intro").classList.add("hidden");
-  document.getElementById("site").classList.add("visible");
-
-  bgMusic.volume = 0.35;
-  bgMusic.play();
-}
-</script>
+<!-- TOGGLE -->
+<div id="soundToggle">🔊 Sound: ON</div>
 
 <div class="code-bg">
   <span>local streak = true</span>
@@ -355,17 +238,11 @@ function enterSite(){
   <span>workspace.CurrentCamera</span>
   <span>task.wait()</span>
   <span>getgenv().Streak</span>
-  <span>RunService.RenderStepped</span>
-  <span>pcall(function()</span>
-  <span>module.execute()</span>
-  <span>settings.safeMode = true</span>
-  <span>local ui = Streak.Interface</span>
-  <span>return Streak:Launch()</span>
 </div>
 
 <div class="intro" id="intro">
   <div>
-    <img src="streak-logo.png" alt="Streak Logo" onclick="enterSite()">
+    <img src="streak-logo.png" onclick="enterSite()">
     <p>CLICK TO ENTER</p>
   </div>
 </div>
@@ -373,45 +250,97 @@ function enterSite(){
 <div class="site" id="site">
 
 <header>
-  <div class="nav">
-    <a class="brand" href="#home">
-      <img src="streak-logo.png" alt="Streak Logo">
-      <span>STREAK</span>
-    </a>
+<div class="nav">
+<a class="brand" href="#home">
+<img src="streak-logo.png">
+<span>STREAK</span>
+</a>
 
-    <div class="links">
-      <a href="#home">Home</a>
-      <a href="#features">Features</a>
-      <a href="#showcase">Showcase</a>
-      <a href="#updates">Updates</a>
-      <a href="discord.html">Discord</a>
-    </div>
-  </div>
+<div class="links">
+<a href="#home">Home</a>
+<a href="#features">Features</a>
+<a href="#showcase">Showcase</a>
+<a href="#updates">Updates</a>
+<a href="discord.html">Discord</a>
+</div>
+</div>
 </header>
 
 <main class="hero" id="home">
-  <img class="hero-logo" src="streak-logo.png" alt="Streak Official Logo">
+<img class="hero-logo" src="streak-logo.png">
 
-  <h1>STREAK OFFICIAL</h1>
-  <p>A next-generation experience is currently in development.</p>
-  <a class="status" href="#features">Website Coming Soon</a>
+<h1>STREAK OFFICIAL</h1>
+<p>A next-generation experience is currently in development.</p>
+<a class="status" href="#features">Website Coming Soon</a>
 </main>
 
 <section id="features">
-  <div class="section-head">
-    <h2>Features</h2>
-  </div>
-
-  <div class="grid">
-    <div class="card"><h3>Advanced Execution</h3><p>Fast and stable.</p></div>
-    <div class="card"><h3>Security First</h3><p>Protected system.</p></div>
-    <div class="card"><h3>Community Driven</h3><p>Built for users.</p></div>
-  </div>
+<h2>Features</h2>
+<div class="grid">
+<div class="card"><h3>Advanced Execution</h3><p>Fast and stable.</p></div>
+<div class="card"><h3>Security First</h3><p>Protected system.</p></div>
+<div class="card"><h3>Community Driven</h3><p>Built for users.</p></div>
+</div>
 </section>
 
 <footer>
-  © 2026 Streak Official
+© 2026 Streak Official
 </footer>
+
+</div>
+
+<script>
+let soundEnabled = true;
+
+const clickSound = document.getElementById("clickSound");
+const bgMusic = document.getElementById("bgMusic");
+const toggle = document.getElementById("soundToggle");
+
+/* click sound */
+document.addEventListener("click", () => {
+  if (!soundEnabled) return;
+  clickSound.volume = 0.08;
+  clickSound.currentTime = 0;
+  clickSound.play();
+});
+
+/* 🌫️ FADE MUSIC ON ENTER */
+function fadeInMusic(audio){
+  audio.volume = 0;
+  audio.play();
+
+  let v = 0;
+  const fade = setInterval(() => {
+    if (v < 0.35){
+      v += 0.02;
+      audio.volume = v;
+    } else {
+      clearInterval(fade);
+    }
+  }, 80);
+}
+
+/* ENTER SITE */
+function enterSite(){
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("site").classList.add("visible");
+
+  if (soundEnabled) fadeInMusic(bgMusic);
+}
+
+/* toggle */
+toggle.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+
+  if (soundEnabled){
+    toggle.innerText = "🔊 Sound: ON";
+    fadeInMusic(bgMusic);
+  } else {
+    toggle.innerText = "🔇 Sound: OFF";
+    bgMusic.pause();
+  }
+});
+</script>
 
 </body>
 </html>
