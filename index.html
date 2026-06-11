@@ -224,11 +224,9 @@ cursor:pointer;
 
 <body>
 
-<!-- AUDIO -->
 <audio id="clickSound" src="click.mp3" preload="auto"></audio>
 <audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
 
-<!-- TOGGLE -->
 <div id="soundToggle">🔊 Sound: ON</div>
 
 <div class="code-bg">
@@ -260,7 +258,6 @@ cursor:pointer;
 <a href="#home">Home</a>
 <a href="#features">Features</a>
 <a href="#showcase">Showcase</a>
-<a href="#updates">Updates</a>
 <a href="discord.html">Discord</a>
 </div>
 </div>
@@ -268,24 +265,10 @@ cursor:pointer;
 
 <main class="hero" id="home">
 <img class="hero-logo" src="streak-logo.png">
-
 <h1>STREAK OFFICIAL</h1>
 <p>A next-generation experience is currently in development.</p>
 <a class="status" href="#features">Website Coming Soon</a>
 </main>
-
-<section id="features">
-<h2>Features</h2>
-<div class="grid">
-<div class="card"><h3>Advanced Execution</h3><p>Fast and stable.</p></div>
-<div class="card"><h3>Security First</h3><p>Protected system.</p></div>
-<div class="card"><h3>Community Driven</h3><p>Built for users.</p></div>
-</div>
-</section>
-
-<footer>
-© 2026 Streak Official
-</footer>
 
 </div>
 
@@ -296,15 +279,23 @@ const clickSound = document.getElementById("clickSound");
 const bgMusic = document.getElementById("bgMusic");
 const toggle = document.getElementById("soundToggle");
 
-/* click sound */
-document.addEventListener("click", () => {
+function updateToggle(){
+  toggle.innerText = soundEnabled ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+}
+
+/* 🔊 UI CLICK ONLY */
+document.addEventListener("click", (e) => {
   if (!soundEnabled) return;
+
+  const valid = e.target.closest("a, button, img, .hero-logo, .links a, .brand, .status");
+  if (!valid) return;
+
   clickSound.volume = 0.08;
   clickSound.currentTime = 0;
   clickSound.play();
 });
 
-/* 🌫️ FADE MUSIC ON ENTER */
+/* 🌫️ FADE MUSIC */
 function fadeInMusic(audio){
   audio.volume = 0;
   audio.play();
@@ -320,7 +311,7 @@ function fadeInMusic(audio){
   }, 80);
 }
 
-/* ENTER SITE */
+/* ENTER */
 function enterSite(){
   document.getElementById("intro").classList.add("hidden");
   document.getElementById("site").classList.add("visible");
@@ -328,18 +319,21 @@ function enterSite(){
   if (soundEnabled) fadeInMusic(bgMusic);
 }
 
-/* toggle */
+/* TOGGLE */
 toggle.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
 
-  if (soundEnabled){
-    toggle.innerText = "🔊 Sound: ON";
-    fadeInMusic(bgMusic);
-  } else {
-    toggle.innerText = "🔇 Sound: OFF";
+  updateToggle();
+
+  if (!soundEnabled){
     bgMusic.pause();
+  } else {
+    fadeInMusic(bgMusic);
   }
 });
+
+/* INIT */
+updateToggle();
 </script>
 
 </body>
