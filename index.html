@@ -69,6 +69,7 @@ body{
 .intro.hidden{
   opacity:0;
   visibility:hidden;
+  pointer-events:none;
 }
 
 .intro img{
@@ -205,6 +206,40 @@ header{
   text-decoration:none;
 }
 
+/* sections */
+section{
+  max-width:1120px;
+  margin:auto;
+  padding:70px 22px;
+}
+
+h2{
+  font-size:34px;
+  color:#f3d8ff;
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.card{
+  padding:24px;
+  border-radius:20px;
+  background:rgba(8,0,14,.96);
+  min-height:140px;
+}
+
+footer{
+  text-align:center;
+  padding:34px 22px;
+  border-top:1px solid rgba(198,89,255,.25);
+  color:#9b7db0;
+  font-size:13px;
+}
+
 /* toggle */
 #soundToggle{
 position:fixed;
@@ -218,24 +253,23 @@ border:1px solid #d946ff;
 color:white;
 font-size:12px;
 cursor:pointer;
+user-select:none;
 }
 </style>
 </head>
 
 <body>
 
+<!-- AUDIO -->
 <audio id="clickSound" src="click.mp3" preload="auto"></audio>
 <audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
 
-<div id="soundToggle">🔊 Sound: ON</div>
+<!-- TOGGLE -->
+<div id="soundToggle"></div>
 
 <div class="code-bg">
   <span>local streak = true</span>
   <span>loadstring(...)</span>
-  <span>game:GetService("Players")</span>
-  <span>workspace.CurrentCamera</span>
-  <span>task.wait()</span>
-  <span>getgenv().Streak</span>
 </div>
 
 <div class="intro" id="intro">
@@ -258,6 +292,7 @@ cursor:pointer;
 <a href="#home">Home</a>
 <a href="#features">Features</a>
 <a href="#showcase">Showcase</a>
+<a href="#updates">Updates</a>
 <a href="discord.html">Discord</a>
 </div>
 </div>
@@ -269,6 +304,33 @@ cursor:pointer;
 <p>A next-generation experience is currently in development.</p>
 <a class="status" href="#features">Website Coming Soon</a>
 </main>
+
+<section id="features">
+<h2>Features</h2>
+<div class="grid">
+<div class="card"><h3>Advanced Execution</h3><p>Fast and stable.</p></div>
+<div class="card"><h3>Security First</h3><p>Protected system.</p></div>
+<div class="card"><h3>Community Driven</h3><p>Built for users.</p></div>
+</div>
+</section>
+
+<section id="showcase">
+<h2>Showcase</h2>
+<div class="grid">
+<div class="card">Interface Preview</div>
+<div class="card">Development Preview</div>
+<div class="card">Release Media</div>
+</div>
+</section>
+
+<section id="updates">
+<h2>Updates</h2>
+<div class="card">Development ongoing...</div>
+</section>
+
+<footer>
+© 2026 Streak Official
+</footer>
 
 </div>
 
@@ -283,11 +345,11 @@ function updateToggle(){
   toggle.innerText = soundEnabled ? "🔊 Sound: ON" : "🔇 Sound: OFF";
 }
 
-/* 🔊 UI CLICK ONLY */
+/* CLICK SOUND */
 document.addEventListener("click", (e) => {
   if (!soundEnabled) return;
 
-  const valid = e.target.closest("a, button, img, .hero-logo, .links a, .brand, .status");
+  const valid = e.target.closest("a, button, img, .card, .status, .brand");
   if (!valid) return;
 
   clickSound.volume = 0.08;
@@ -295,16 +357,18 @@ document.addEventListener("click", (e) => {
   clickSound.play();
 });
 
-/* 🌫️ FADE MUSIC */
-function fadeInMusic(audio){
-  audio.volume = 0;
-  audio.play();
+/* MUSIC */
+function fadeInMusic(){
+  bgMusic.volume = 0;
+  bgMusic.play();
 
   let v = 0;
   const fade = setInterval(() => {
+    if (!soundEnabled) return clearInterval(fade);
+
     if (v < 0.35){
       v += 0.02;
-      audio.volume = v;
+      bgMusic.volume = v;
     } else {
       clearInterval(fade);
     }
@@ -316,23 +380,18 @@ function enterSite(){
   document.getElementById("intro").classList.add("hidden");
   document.getElementById("site").classList.add("visible");
 
-  if (soundEnabled) fadeInMusic(bgMusic);
+  if (soundEnabled) fadeInMusic();
 }
 
 /* TOGGLE */
 toggle.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
-
   updateToggle();
 
-  if (!soundEnabled){
-    bgMusic.pause();
-  } else {
-    fadeInMusic(bgMusic);
-  }
+  if (!soundEnabled) bgMusic.pause();
+  else bgMusic.play();
 });
 
-/* INIT */
 updateToggle();
 </script>
 
